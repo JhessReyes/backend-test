@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sse.SSE
 import org.slf4j.LoggerFactory
+import stsa.kotlin_htmx.api.v1.routes.userRouting
 
 fun Application.configureRouting() {
     val logger = LoggerFactory.getLogger("Routing")
@@ -20,5 +21,6 @@ fun Application.configureRouting() {
     }
     routing {
         staticResources("/static", "static")
+        userRouting()
     }
 }
