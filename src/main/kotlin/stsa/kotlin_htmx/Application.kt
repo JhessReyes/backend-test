@@ -7,6 +7,7 @@ import io.ktor.server.plugins.compression.*
 import stsa.kotlin_htmx.plugins.configureHTTP
 import stsa.kotlin_htmx.plugins.configureMonitoring
 import stsa.kotlin_htmx.plugins.configureRouting
+import stsa.kotlin_htmx.plugins.configureSerialization
 import java.io.File
 
 data class ApplicationConfig(
@@ -55,6 +56,7 @@ fun main() {
 }
 
 fun Application.module() {
+    configureSerialization()
     configureHTTP()
     configureMonitoring()
     configureRouting()

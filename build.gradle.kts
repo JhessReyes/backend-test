@@ -6,6 +6,7 @@ val logbackVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "1.9.0"
     id("io.ktor.plugin") version "3.0.1"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.gradleup.shadow") version "8.3.5"
@@ -70,6 +71,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
     testImplementation("org.xmlunit:xmlunit-core:2.10.0")
     testImplementation("org.xmlunit:xmlunit-assertj3:2.10.0")
+
+    // Serialization with kotlinx
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 tasks.withType<DependencyUpdatesTask> {
