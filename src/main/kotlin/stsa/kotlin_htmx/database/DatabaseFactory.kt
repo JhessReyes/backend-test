@@ -1,16 +1,26 @@
 package stsa.kotlin_htmx.database
 
-import com.typesafe.config.ConfigFactory
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
+import stsa.kotlin_htmx.database.models.User
 
-object DatabaseFactory{
-    fun init(){
-        val config = ConfigFactory.load().getConfig("database")
+object DatabaseFactory {
+    fun init() {
+        val dbUser = System.getenv("DB_USER")
+        val dbPassword = System.getenv("DB_PASSWORD")
+        val dbUrl = System.getenv("DB_URL")
+        val dbDriver = System.getenv("DB_DRIVER")
+
         Database.connect(
-            url = config.getString("url"),
-            driver = config.getString("driver"),
-            user = config.getString("user"),
-            password = config.getString("password")
+            url = dbUrl,
+            driver = dbDriver,
+            user = dbUser,
+            password = dbPassword
         )
+
+        transaction {
+            SchemaUtils.create(User)
+        }
     }
 }

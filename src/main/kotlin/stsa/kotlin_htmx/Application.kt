@@ -59,7 +59,7 @@ fun main() {
 
 fun Application.module() {
     FlywayMigrations.migrate()
-    /* DatabaseFactory.init()*/
+    DatabaseFactory.init()
     configureSerialization()
     configureHTTP()
     configureMonitoring()
