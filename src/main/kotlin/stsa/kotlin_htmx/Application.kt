@@ -4,6 +4,8 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.compression.*
+import stsa.kotlin_htmx.database.DatabaseFactory
+import stsa.kotlin_htmx.database.migrations.FlywayMigrations
 import stsa.kotlin_htmx.plugins.configureHTTP
 import stsa.kotlin_htmx.plugins.configureMonitoring
 import stsa.kotlin_htmx.plugins.configureRouting
@@ -56,12 +58,13 @@ fun main() {
 }
 
 fun Application.module() {
+    FlywayMigrations.migrate()
+    /* DatabaseFactory.init()*/
     configureSerialization()
     configureHTTP()
     configureMonitoring()
     configureRouting()
     install(Compression)
-
     // Manual dependency injection :) Usually smart to find a separate place to do this from KTor
     val config = ApplicationConfig.load()
 

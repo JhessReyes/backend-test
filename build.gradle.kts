@@ -75,6 +75,16 @@ dependencies {
     // Serialization with kotlinx
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+    // Database Implementation
+    implementation("org.jetbrains.exposed:exposed-core:0.45.0")
+    implementation("org.jetbrains.exposed:exposed-dao:0.45.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.45.0")
+    implementation("org.flywaydb:flyway-core:9.22.3")
+    implementation("org.postgresql:postgresql:42.7.2")
+
+    // Enviroment
+    implementation("com.typesafe:config:1.4.3")
 }
 
 tasks.withType<DependencyUpdatesTask> {
