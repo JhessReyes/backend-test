@@ -1,16 +1,8 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_PASSWORD: ${DB_PASSWORD}
-        DB_URL: ${DB_URL}
-        DB_USER: ${DB_USER}
-        DB_DRIVER: ${DB_DRIVER}
     container_name: backend-test
     ports:
       - "8080:8080"
