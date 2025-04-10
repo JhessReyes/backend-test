@@ -16,7 +16,7 @@ class DataHandlingTest {
             module()
         }
 
-        client.get("/xml").apply {
+        client.get("/api/v1/skins/xml").apply {
             val dbf = DocumentBuilderFactory.newInstance()
             val db = dbf.newDocumentBuilder()
             assertEquals(
