@@ -22,7 +22,6 @@ class DataSeeder(private val apiService: ExternalApiService) {
         teamList.addAll(agentsTeamList)
         teamList.addAll(skinsTeamList)
 
-        println(teamList)
         transaction {
             // TODO: create transaction seeders here
             teamList.forEach { team ->
