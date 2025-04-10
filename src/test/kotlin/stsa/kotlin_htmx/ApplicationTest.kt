@@ -15,17 +15,17 @@ class ApplicationTest {
         client.get("/api/v1/skins").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
-        client.get("/api/v1//agents").apply {
+        client.get("/api/v1/agents").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
-        client.get("/api/v1//crates").apply {
+        client.get("/api/v1/crates").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
-        client.get("/api/v1//keys").apply {
+        client.get("/api/v1/keys").apply {
             assertEquals(HttpStatusCode.Unauthorized, status)
         }
         //TODO: <-- YOUR CODE HERE -> Use an authenticated client
-        client.get("/api/v1//keys").apply {
+        client.get("/api/v1/keys").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
     }
