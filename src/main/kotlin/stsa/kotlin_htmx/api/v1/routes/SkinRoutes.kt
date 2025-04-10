@@ -5,18 +5,17 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import stsa.kotlin_htmx.database.models.User
+import stsa.kotlin_htmx.database.models.Skin
 
-fun Route.userRouting() {
-    route("api/v1/users")
-    {
+fun Route.skinRouting() {
+    route("api/v1/skins") {
         get {
             val list = transaction {
-                User.selectAll().map {
+                Skin.selectAll().map {
                     mapOf(
-                        "id" to it[User.id].toString(),
-                        "name" to it[User.name],
-                        "email" to it[User.email]
+                        "id" to it[Skin.id].toString(),
+                        "name" to it[Skin.name],
+                        "description" to it[Skin.description]
                     )
                 }
             }
@@ -25,11 +24,6 @@ fun Route.userRouting() {
                 call.respond(
                     status = HttpStatusCode.OK,
                     message = list
-                )
-            } else {
-                call.respond(
-                    status = HttpStatusCode.OK,
-                    message = "[]"
                 )
             }
         }

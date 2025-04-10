@@ -82,9 +82,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.45.0")
     implementation("org.flywaydb:flyway-core:9.22.3")
     implementation("org.postgresql:postgresql:42.7.2")
-
-    // Enviroment
-    implementation("com.typesafe:config:1.4.3")
+    testImplementation("org.postgresql:postgresql:42.7.2")
 }
 
 tasks.withType<DependencyUpdatesTask> {

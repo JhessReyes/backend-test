@@ -12,7 +12,7 @@ class ApplicationTest {
         application {
             module()
         }
-        client.get("/skins").apply {
+        client.get("/api/v1/skins").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
         client.get("/agents").apply {

@@ -69,10 +69,10 @@ fun Application.module() {
     val apiService = ExternalApiService(client)
     val dataSeeder = DataSeeder(apiService)
 
-    runBlocking {
+    /*runBlocking {
         dataSeeder.seed()
     }
-
+*/
     configureSerialization()
     configureHTTP()
     configureMonitoring()
