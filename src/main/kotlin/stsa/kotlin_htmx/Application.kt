@@ -1,11 +1,16 @@
 package stsa.kotlin_htmx
 
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.compression.*
+import kotlinx.coroutines.runBlocking
+import stsa.kotlin_htmx.api.v1.services.ExternalApiService
 import stsa.kotlin_htmx.database.DatabaseFactory
 import stsa.kotlin_htmx.database.migrations.FlywayMigrations
+import stsa.kotlin_htmx.database.seeders.DataSeeder
 import stsa.kotlin_htmx.plugins.configureHTTP
 import stsa.kotlin_htmx.plugins.configureMonitoring
 import stsa.kotlin_htmx.plugins.configureRouting
@@ -60,6 +65,14 @@ fun main() {
 fun Application.module() {
     FlywayMigrations.migrate()
     DatabaseFactory.init()
+    val client = HttpClient(CIO)
+    val apiService = ExternalApiService(client)
+    val dataSeeder = DataSeeder(apiService)
+
+    runBlocking {
+        dataSeeder.seed()
+    }
+
     configureSerialization()
     configureHTTP()
     configureMonitoring()
