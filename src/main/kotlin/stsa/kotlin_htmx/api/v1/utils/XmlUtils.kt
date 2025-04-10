@@ -1,6 +1,7 @@
 package stsa.kotlin_htmx.api.v1.utils
 
 import stsa.kotlin_htmx.api.v1.responses.externalSource.AgentResponse
+import stsa.kotlin_htmx.api.v1.responses.externalSource.CrateResponse
 import stsa.kotlin_htmx.api.v1.responses.externalSource.SkinResponse
 
 object XmlUtils {
@@ -74,6 +75,31 @@ object XmlUtils {
                 }
 
                 append("</agents>")
+            }
+        } else xml = ""
+
+        return xml
+    }
+
+    fun cratesToXml(crates: List<CrateResponse>): String {
+        val xml: String
+        if (crates.isNotEmpty()) {
+            xml = buildString {
+                append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+                append("<crates>")
+
+                crates.forEach { c ->
+                    append("<crate>")
+                    append("<id>${c.id}</id>")
+                    append("<name>${escapeHtmlTags(c.name)}</name>")
+                    if (!c.description.isNullOrBlank()) {
+                        append("<description>${escapeHtmlTags(c.description)}</description>")
+                    }
+                    append("<image>${c.image}</image>")
+                    append("</crate>")
+                }
+
+                append("</crates>")
             }
         } else xml = ""
 
