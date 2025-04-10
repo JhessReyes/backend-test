@@ -9,13 +9,16 @@ import io.ktor.server.routing.*
 import io.ktor.server.sse.SSE
 import org.slf4j.LoggerFactory
 import stsa.kotlin_htmx.api.v1.routes.agentRouting
+import stsa.kotlin_htmx.api.v1.routes.crateRouting
 import stsa.kotlin_htmx.api.v1.routes.skinRouting
 import stsa.kotlin_htmx.api.v1.routes.userRouting
 import stsa.kotlin_htmx.api.v1.services.AgentService
+import stsa.kotlin_htmx.api.v1.services.CrateService
 import stsa.kotlin_htmx.api.v1.services.SkinService
 import stsa.kotlin_htmx.database.models.*
 import stsa.kotlin_htmx.database.repositories.SkinRepository
 import stsa.kotlin_htmx.database.repositories.impl.AgentDataSource
+import stsa.kotlin_htmx.database.repositories.impl.CrateDataSource
 import stsa.kotlin_htmx.database.repositories.impl.SkinDataSource
 
 fun Application.configureRouting() {
@@ -40,6 +43,11 @@ fun Application.configureRouting() {
             val agentDataSource = AgentDataSource(models)
             val agentService = AgentService(agentDataSource)
             agentRouting(agentService)
+
+            // crate routing
+            val crateDataSource = CrateDataSource(models)
+            val crateService = CrateService(crateDataSource)
+            crateRouting(crateService)
 
             userRouting()
 

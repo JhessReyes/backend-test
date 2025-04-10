@@ -28,6 +28,27 @@ class CacheManager<K, V>(
         cache[key] = CacheEntry(value, System.currentTimeMillis())
     }
 
+    fun generateKey(baseKey: String, filters: Map<String, String?>): String {
+        return buildString {
+            append("${baseKey}_")
+
+            if(filters.isEmpty()){
+                append("all_")
+                println("AALL KEY")
+            }else{
+                filters.forEach { (key, value) ->
+                    value?.let {
+                        append("${key}_${it}_")
+                    }
+                }
+            }
+
+            if (last() == '_') {
+                setLength(length - 1)
+            }
+        }
+    }
+
     fun invalidate(key: K) {
         cache.remove(key)
     }
