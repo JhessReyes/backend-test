@@ -1,5 +1,6 @@
 package stsa.kotlin_htmx.database.seeders
 
+import org.jetbrains.exposed.sql.transactions.transaction
 import stsa.kotlin_htmx.api.v1.responses.externalSource.*
 import stsa.kotlin_htmx.api.v1.services.ExternalApiService
 
@@ -15,5 +16,9 @@ class DataSeeder(private val apiService: ExternalApiService) {
         val teamList = HashSet<TeamResponse>()
         teamList.addAll(agentsTeamList)
         teamList.addAll(skinsTeamList)
+
+        transaction {
+            // TODO: create transaction seeders here
+        }
     }
 }

@@ -3,7 +3,7 @@ package stsa.kotlin_htmx.database
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import stsa.kotlin_htmx.database.models.User
+import stsa.kotlin_htmx.database.models.*
 
 object DatabaseFactory {
     fun init() {
@@ -13,14 +13,11 @@ object DatabaseFactory {
         val dbDriver = System.getenv("DB_DRIVER")
 
         Database.connect(
-            url = dbUrl,
-            driver = dbDriver,
-            user = dbUser,
-            password = dbPassword
+            url = dbUrl, driver = dbDriver, user = dbUser, password = dbPassword
         )
 
         transaction {
-            SchemaUtils.create(User)
+            SchemaUtils.create(Agent, Crate, KeyCrates, Key, SkinCrates, Skin, Team, Crate)
         }
     }
 }
