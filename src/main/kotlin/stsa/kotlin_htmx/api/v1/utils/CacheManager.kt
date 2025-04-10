@@ -34,7 +34,6 @@ class CacheManager<K, V>(
 
             if(filters.isEmpty()){
                 append("all_")
-                println("AALL KEY")
             }else{
                 filters.forEach { (key, value) ->
                     value?.let {
