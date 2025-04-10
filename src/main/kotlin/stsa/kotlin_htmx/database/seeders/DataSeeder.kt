@@ -26,7 +26,7 @@ class DataSeeder(private val apiService: ExternalApiService) {
         transaction {
             // TODO: create transaction seeders here
             teamList.forEach { team ->
-                Team.insert(onConflict = OnConflict.Ignore) {
+                Team.insert {
                     it[id] = team.id
                     it[name] = team.name
                 }
