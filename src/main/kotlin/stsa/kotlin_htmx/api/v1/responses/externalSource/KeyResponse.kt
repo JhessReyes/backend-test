@@ -1,6 +1,8 @@
 package stsa.kotlin_htmx.api.v1.responses.externalSource
 
 import kotlinx.serialization.Serializable
+@Serializable
+data class KeyCrateRelation(val keyId: String, val crateId: String)
 
 @Serializable
 data class KeyResponse(
@@ -10,11 +12,6 @@ data class KeyResponse(
     val image: String,
     val crates: List<CrateResponse>
 ) {
-    val keyIdAndCratesId: List<Map<String, String>>
-        get() = crates.map { crate ->
-            mapOf(
-                "crateId" to crate.id,
-                "keyId" to this.id
-            )
-        }
+    val keyIdAndCratesId: List<KeyCrateRelation>
+        get() = crates.map { crate -> KeyCrateRelation(id, crate.id) }
 }

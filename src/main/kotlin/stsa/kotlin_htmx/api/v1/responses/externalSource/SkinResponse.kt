@@ -3,6 +3,9 @@ package stsa.kotlin_htmx.api.v1.responses.externalSource
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class SkinCrateRelation(val skinId: String, val crateId: String)
+
+@Serializable
 data class SkinResponse(
     val id: String,
     val name: String,
@@ -11,11 +14,6 @@ data class SkinResponse(
     val team: TeamResponse,
     val crates: List<CrateResponse>
 ) {
-    val skinIdAndCratesId: List<Map<String, String>>
-        get() = crates.map { crate ->
-            mapOf(
-                "crateId" to crate.id,
-                "skinId" to this.id
-            )
-        }
+    val skinIdAndCratesId: List<SkinCrateRelation>
+        get() = crates.map { crate -> SkinCrateRelation(id, crate.id) }
 }
