@@ -5,7 +5,6 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import stsa.kotlin_htmx.database.models.AgentModel
 import stsa.kotlin_htmx.database.models.DatabaseModels
-import stsa.kotlin_htmx.database.models.Team
 import stsa.kotlin_htmx.database.models.TeamModel
 import stsa.kotlin_htmx.database.repositories.AgentRepository
 import stsa.kotlin_htmx.database.repositories.WhereAgent

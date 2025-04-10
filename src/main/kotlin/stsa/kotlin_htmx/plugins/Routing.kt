@@ -34,7 +34,7 @@ fun Application.configureRouting() {
         val models = DatabaseModels(Agent, Skin, Crate, Key, Team, KeyCrates, SkinCrates)
         route("api/v1") {
             // skin routing
-            val skinRepo = SkinDataSource(Skin)
+            val skinRepo = SkinDataSource(models)
             val skinService = SkinService(skinRepo)
             skinRouting(skinService)
 

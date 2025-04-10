@@ -14,10 +14,20 @@ class SkinService(private val repository: SkinDataSource) {
         ttlMillis = TimeUnit.MINUTES.toMillis(10)
     )
 
-    suspend fun getSkinsOnWhere(crate: String?): List<SkinResponse>? {
-        val key = if (crate.isNullOrBlank()) "skins_all" else "skins_${crate}"
+    suspend fun getSkinsOnWhere(whereSkin: WhereSkin): List<SkinResponse>? {
+        val filters = mapOf(
+            "id" to whereSkin.id,
+            "name" to whereSkin.name,
+            "description" to whereSkin.description,
+            "image" to whereSkin.image,
+            "teamName" to whereSkin.teamName,
+            "crateName" to whereSkin.crateName
+        )
+        val key = skinCache.generateKey("skins", filters = filters)
+
+
         val cachedSkins = skinCache.get(key) ?: run {
-            val skins = repository.getSkins(WhereSkin(crate))
+            val skins = repository.getSkins(whereSkin)
             skinCache.put(key, skins)
             skins
         }
