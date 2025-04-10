@@ -2,15 +2,24 @@ version: '3.8'
 
 services:
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_URL: ${DB_URL}
+        DB_USER: ${DB_USER}
+        DB_DRIVER: ${DB_DRIVER}
+    container_name: backend-test
     ports:
       - "8080:8080"
     environment:
-      - DB_NAME=db-startrack-dev
-      - DB_PASSWORD=M4b6F/Z9U
-      - DB_URL=jdbc:postgresql://localhost:5431/db-startrack-dev
-      - DB_USER=startrackuserdev
-      - DB_DRIVER=org.postgresql.Driver
+      DB_NAME: db-startrack-dev
+      DB_PASSWORD: M4b6F/Z9U
+      DB_URL: jdbc:postgresql://db:5432/db-startrack-dev
+      DB_USER: startrackuserdev
+      DB_DRIVER: org.postgresql.Driver
     depends_on:
       - db
     networks:
@@ -20,10 +29,10 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_DB: db-startrack-dev
-      POSTGRES_USER: startrackusedev
+      POSTGRES_USER: startrackuserdev
       POSTGRES_PASSWORD: M4b6F/Z9U
     ports:
-      - "5431:5431"
+      - "5431:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
