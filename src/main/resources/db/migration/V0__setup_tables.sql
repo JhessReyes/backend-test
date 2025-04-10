@@ -1,9 +1,9 @@
-
 CREATE TABLE "tb_skin" (
     "id" varchar(255) NULL,
     "name" varchar(255) NULL,
     "description" text NULL,
     "image" text NULL,
+    "teamId" varchar(255) NULL,
     PRIMARY KEY ("id")
 );
 
@@ -12,6 +12,7 @@ CREATE TABLE "tb_agent" (
     "name" varchar(255) NULL,
     "description" text NULL,
     "image" text NULL,
+    "teamId" varchar(255) NULL,
     PRIMARY KEY ("id")
 );
 
@@ -37,18 +38,6 @@ CREATE TABLE "tb_team" (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE "tb_agent_team" (
-    "agentId" varchar(255) NULL,
-    "teamId" varchar(255) NULL,
-    PRIMARY KEY ("agentId", "teamId")
-);
-
-CREATE TABLE "tb_skin_team" (
-    "skinId" varchar(255) NULL,
-    "teamId" varchar(255) NULL,
-    PRIMARY KEY ("skinId", "teamId")
-);
-
 CREATE TABLE "tb_skin_crate" (
     "skinId" varchar(255) NULL,
     "crateId" varchar(255) NULL,
@@ -69,14 +58,6 @@ CREATE TABLE "tb_user" (
     "salt" varchar(255) NULL
 );
 
-ALTER TABLE "tb_agent_team" ADD FOREIGN KEY ("agentId") REFERENCES "tb_agent" ("id");
-
-ALTER TABLE "tb_agent_team" ADD FOREIGN KEY ("teamId") REFERENCES "tb_team" ("id");
-
-ALTER TABLE "tb_skin_team" ADD FOREIGN KEY ("skinId") REFERENCES "tb_skin" ("id");
-
-ALTER TABLE "tb_skin_team" ADD FOREIGN KEY ("teamId") REFERENCES "tb_team" ("id");
-
 ALTER TABLE "tb_skin_crate" ADD FOREIGN KEY ("skinId") REFERENCES "tb_skin" ("id");
 
 ALTER TABLE "tb_skin_crate" ADD FOREIGN KEY ("crateId") REFERENCES "tb_crate" ("id");
@@ -84,3 +65,7 @@ ALTER TABLE "tb_skin_crate" ADD FOREIGN KEY ("crateId") REFERENCES "tb_crate" ("
 ALTER TABLE "tb_key_crate" ADD FOREIGN KEY ("keyId") REFERENCES "tb_key" ("id");
 
 ALTER TABLE "tb_key_crate" ADD FOREIGN KEY ("crateId") REFERENCES "tb_crate" ("id");
+
+ALTER TABLE "tb_agent" ADD FOREIGN KEY ("teamId") REFERENCES "tb_team" ("id");
+
+ALTER TABLE "tb_skin" ADD FOREIGN KEY ("teamId") REFERENCES "tb_team" ("id");
