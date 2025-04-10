@@ -33,7 +33,8 @@ class SkinService(private val repository: SkinDataSource) {
                     CrateResponse(
                         id = c.id, name = c.name, description = c.description, image = c.image
                     )
-                })
+                }
+            )
         }
     }
 }

@@ -1,15 +1,19 @@
 package stsa.kotlin_htmx.database.models
 
 class DatabaseModels(
-    agentModel: Agent,
-    skinModel: Skin,
-    crateModel: Crate,
-    keyModel: Key,
-    teamModel: Team
+    agent: Agent,
+    skin: Skin,
+    crate: Crate,
+    key: Key,
+    team: Team,
+    keyCrates: KeyCrates,
+    skinCrates: SkinCrates
 ) {
-    val Agent: Agent = agentModel
-    val Skin: Skin = skinModel
-    val Crate: Crate = crateModel
-    val Key: Key = keyModel
-    val Team: Team = teamModel
+    val Agent: Agent = agent
+    val Skin: Skin = skin
+    val Crate: Crate = crate
+    val Key: Key = key
+    val Team: Team = team
+    val KeyCrates: KeyCrates = keyCrates
+    val SkinCrates: SkinCrates = skinCrates
 }

@@ -3,26 +3,27 @@ package stsa.kotlin_htmx.api.v1.routes
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import stsa.kotlin_htmx.api.v1.services.CrateService
-import stsa.kotlin_htmx.database.repositories.WhereCrate
+import stsa.kotlin_htmx.api.v1.services.KeyService
+import stsa.kotlin_htmx.database.repositories.WhereKey
 
-fun Route.crateRouting(service: CrateService) {
-    route("/crates") {
+fun Route.keyRouting(service: KeyService) {
+    route("/keys") {
         get {
             val getParam = call.request.queryParameters
-            val whereCrate =
-                WhereCrate(
+            val whereKey =
+                WhereKey(
                     id = getParam["id"],
                     name = getParam["name"],
                     description = getParam["description"],
-                    image = getParam["image"]
+                    image = getParam["image"],
+                    crateName = getParam["crateName"]
                 )
-            val crates = service.getCratesOnWhere(whereCrate)
+            val keys = service.getKeysOnWhere(whereKey)
 
-            if (crates.isNotEmpty() == true) {
+            if (keys.isNotEmpty() == true) {
                 call.respond(
                     status = HttpStatusCode.OK,
-                    message = crates
+                    message = keys
                 )
             } else return@get
         }
