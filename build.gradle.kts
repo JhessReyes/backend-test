@@ -83,6 +83,10 @@ dependencies {
     implementation("org.flywaydb:flyway-core:9.22.3")
     implementation("org.postgresql:postgresql:42.7.2")
     testImplementation("org.postgresql:postgresql:42.7.2")
+
+    // Sort of Authentication
+    implementation("io.ktor:ktor-server-auth:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-auth:$ktorVersion")
 }
 
 tasks.withType<DependencyUpdatesTask> {

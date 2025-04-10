@@ -11,10 +11,7 @@ import stsa.kotlin_htmx.api.v1.services.ExternalApiService
 import stsa.kotlin_htmx.database.DatabaseFactory
 import stsa.kotlin_htmx.database.migrations.FlywayMigrations
 import stsa.kotlin_htmx.database.seeders.DataSeeder
-import stsa.kotlin_htmx.plugins.configureHTTP
-import stsa.kotlin_htmx.plugins.configureMonitoring
-import stsa.kotlin_htmx.plugins.configureRouting
-import stsa.kotlin_htmx.plugins.configureSerialization
+import stsa.kotlin_htmx.plugins.*
 import java.io.File
 
 data class ApplicationConfig(
@@ -76,6 +73,7 @@ fun Application.module() {
     configureSerialization()
     configureHTTP()
     configureMonitoring()
+    configureSecurity()
     configureRouting()
     install(Compression)
     // Manual dependency injection :) Usually smart to find a separate place to do this from KTor

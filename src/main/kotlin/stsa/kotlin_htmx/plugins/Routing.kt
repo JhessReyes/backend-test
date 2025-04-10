@@ -2,6 +2,7 @@ package stsa.kotlin_htmx.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
@@ -48,10 +49,12 @@ fun Application.configureRouting() {
             val crateService = CrateService(crateDataSource)
             crateRouting(crateService)
 
-            // key routing
-            val keyDataSource = KeyDataSource(models)
-            val keyService = KeyService(keyDataSource)
-            keyRouting(keyService)
+            authenticate("auth-basic") {
+                // key routing
+                val keyDataSource = KeyDataSource(models)
+                val keyService = KeyService(keyDataSource)
+                keyRouting(keyService)
+            }
 
             userRouting()
 

@@ -1,5 +1,7 @@
 package stsa.kotlin_htmx
 
+import io.ktor.client.plugins.auth.*
+import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.testApplication
@@ -25,7 +27,16 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.Unauthorized, status)
         }
         //TODO: <-- YOUR CODE HERE -> Use an authenticated client
-        client.get("/api/v1/keys").apply {
+        val authenticatedClient = createClient {
+            install(Auth) {
+                basic {
+                    credentials {
+                        BasicAuthCredentials(username = "admin", password = "secret")
+                    }
+                }
+            }
+        }
+        authenticatedClient.get("/api/v1/keys").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
     }
