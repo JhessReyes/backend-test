@@ -26,12 +26,7 @@ fun Route.userRouting() {
                     status = HttpStatusCode.OK,
                     message = list
                 )
-            } else {
-                call.respond(
-                    status = HttpStatusCode.OK,
-                    message = "[]"
-                )
-            }
+            } else return@get
         }
     }
 }

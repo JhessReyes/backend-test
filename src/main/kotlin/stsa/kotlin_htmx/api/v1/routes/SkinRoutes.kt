@@ -3,40 +3,32 @@ package stsa.kotlin_htmx.api.v1.routes
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import stsa.kotlin_htmx.api.v1.responses.externalSource.CrateResponse
-import stsa.kotlin_htmx.api.v1.responses.externalSource.SkinResponse
-import stsa.kotlin_htmx.api.v1.responses.externalSource.TeamResponse
 import stsa.kotlin_htmx.api.v1.services.SkinService
+import stsa.kotlin_htmx.api.v1.utils.XmlUtils
 
 fun Route.skinRouting(service: SkinService) {
     route("api/v1/skins") {
         get {
-            val list = service.getSkinsOnWhere(crate = "Kilowatt Case")
-
-            val listResponse = list.map { i ->
-                SkinResponse(
-                    id = i.id,
-                    name = i.name,
-                    description = i.description,
-                    image = i.image,
-                    team = TeamResponse(i.team.id, i.team.name),
-                    crates = i.crates.map { c ->
-                        CrateResponse(
-                            id = c.id,
-                            name = c.name,
-                            description = c.description,
-                            image = c.image
-                        )
-                    }
-                )
-            }
-
-            if (listResponse.isNotEmpty()) {
+            val crate = call.request.queryParameters["crates"]
+            val skins = service.getSkinsOnWhere(crate = crate)
+            if (skins.isNotEmpty()) {
                 call.respond(
                     status = HttpStatusCode.OK,
-                    message = listResponse
+                    message = skins
                 )
-            }
+            } else return@get
+        }
+        get("/xml") {
+            val crate = call.request.queryParameters["crates"]
+            val skins = service.getSkinsOnWhere(crate = crate)
+            val xml = XmlUtils.skinsToXml(skins)
+
+            if (skins.isNotEmpty()) {
+                call.respond(
+                    status = HttpStatusCode.OK,
+                    message = call.respondText(xml, ContentType.Application.Xml)
+                )
+            } else return@get
         }
     }
 }
