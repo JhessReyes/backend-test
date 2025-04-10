@@ -10,21 +10,19 @@ fun Route.skinRouting(service: SkinService) {
     route("api/v1/skins") {
         get {
             val crate = call.request.queryParameters["crates"]
-            val skins = service.getSkinsOnWhere(crate = crate?.let { "" })
-            if (skins != null) {
-                if (skins?.isNotEmpty() == true) {
-                    call.respond(
-                        status = HttpStatusCode.OK,
-                        message = skins
-                    )
-                } else return@get
-            }
+            val skins = service.getSkinsOnWhere(crate = crate)
+
+            if (skins?.isNotEmpty() == true) {
+                call.respond(
+                    status = HttpStatusCode.OK,
+                    message = skins
+                )
+            } else return@get
+
         }
         get("/xml") {
             val crate = call.request.queryParameters["crates"]
-            println(crate)
             val skins = service.getSkinsOnWhere(crate = crate)
-            println(skins)
             val xml = skins?.let { XmlUtils.skinsToXml(it) }
 
             if (xml != null) {

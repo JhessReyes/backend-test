@@ -9,11 +9,12 @@ import stsa.kotlin_htmx.database.repositories.WhereSkin
 
 class SkinDataSource(skin: Skin) : SkinRepository {
     override suspend fun getSkins(where: WhereSkin): List<SkinModel> {
+        println(where.crate ?: "")
         val list = transaction {
             val query = (Skin leftJoin SkinCrates leftJoin Crate innerJoin Team)
                 .selectAll()
                 .orWhere {
-                    Crate.name like "%${where.crate}%"
+                    Crate.name like "%${where.crate ?: ""}%"
                 }
                 .groupBy(Skin.id, SkinCrates.skinId, SkinCrates.crateId, Crate.id, Team.id)
                 .toList()
