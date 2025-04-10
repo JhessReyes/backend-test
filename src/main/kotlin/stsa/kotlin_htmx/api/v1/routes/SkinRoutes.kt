@@ -7,7 +7,7 @@ import stsa.kotlin_htmx.api.v1.services.SkinService
 import stsa.kotlin_htmx.api.v1.utils.XmlUtils
 
 fun Route.skinRouting(service: SkinService) {
-    route("api/v1/skins") {
+    route("/skins") {
         get {
             val crate = call.request.queryParameters["crates"]
             val skins = service.getSkinsOnWhere(crate = crate)

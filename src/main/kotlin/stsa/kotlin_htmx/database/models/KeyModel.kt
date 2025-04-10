@@ -10,3 +10,11 @@ object Key : Table("tb_key") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
+data class KeyModel(
+    val id: String,
+    val name: String,
+    val description: String,
+    val image: String,
+    val crates: List<CrateModel>
+)

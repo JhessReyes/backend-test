@@ -9,7 +9,6 @@ import stsa.kotlin_htmx.database.repositories.WhereSkin
 
 class SkinDataSource(skin: Skin) : SkinRepository {
     override suspend fun getSkins(where: WhereSkin): List<SkinModel> {
-        println(where.crate ?: "")
         val list = transaction {
             val query = (Skin leftJoin SkinCrates leftJoin Crate innerJoin Team)
                 .selectAll()
