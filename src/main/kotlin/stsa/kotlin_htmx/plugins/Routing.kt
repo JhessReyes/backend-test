@@ -10,6 +10,10 @@ import io.ktor.server.sse.SSE
 import org.slf4j.LoggerFactory
 import stsa.kotlin_htmx.api.v1.routes.skinRouting
 import stsa.kotlin_htmx.api.v1.routes.userRouting
+import stsa.kotlin_htmx.api.v1.services.SkinService
+import stsa.kotlin_htmx.database.models.Skin
+import stsa.kotlin_htmx.database.repositories.SkinRepository
+import stsa.kotlin_htmx.database.repositories.impl.SkinDataSource
 
 fun Application.configureRouting() {
     val logger = LoggerFactory.getLogger("Routing")
@@ -22,7 +26,11 @@ fun Application.configureRouting() {
     }
     routing {
         staticResources("/static", "static")
-        skinRouting()
+        //skin routing
+        val skinRepo = SkinDataSource(Skin)
+        val skinService = SkinService(skinRepo)
+        skinRouting(skinService)
+
         userRouting()
     }
 }

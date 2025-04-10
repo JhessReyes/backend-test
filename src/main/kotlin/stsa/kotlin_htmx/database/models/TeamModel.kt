@@ -8,3 +8,8 @@ object Team : Table("tb_team") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
+data class TeamModel(
+    val id: String,
+    val name: String
+)

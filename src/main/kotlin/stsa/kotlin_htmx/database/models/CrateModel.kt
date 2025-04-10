@@ -10,3 +10,10 @@ object Crate : Table("tb_crate") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
+data class CrateModel(
+    val id: String,
+    val name: String,
+    val description: String? = null,
+    val image: String
+)

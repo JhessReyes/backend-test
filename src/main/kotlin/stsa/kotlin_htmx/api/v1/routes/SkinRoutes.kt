@@ -3,27 +3,38 @@ package stsa.kotlin_htmx.api.v1.routes
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
-import stsa.kotlin_htmx.database.models.Skin
+import stsa.kotlin_htmx.api.v1.responses.externalSource.CrateResponse
+import stsa.kotlin_htmx.api.v1.responses.externalSource.SkinResponse
+import stsa.kotlin_htmx.api.v1.responses.externalSource.TeamResponse
+import stsa.kotlin_htmx.api.v1.services.SkinService
 
-fun Route.skinRouting() {
+fun Route.skinRouting(service: SkinService) {
     route("api/v1/skins") {
         get {
-            val list = transaction {
-                Skin.selectAll().map {
-                    mapOf(
-                        "id" to it[Skin.id].toString(),
-                        "name" to it[Skin.name],
-                        "description" to it[Skin.description]
-                    )
-                }
+            val list = service.getSkinsOnWhere(crate = "Kilowatt Case")
+
+            val listResponse = list.map { i ->
+                SkinResponse(
+                    id = i.id,
+                    name = i.name,
+                    description = i.description,
+                    image = i.image,
+                    team = TeamResponse(i.team.id, i.team.name),
+                    crates = i.crates.map { c ->
+                        CrateResponse(
+                            id = c.id,
+                            name = c.name,
+                            description = c.description,
+                            image = c.image
+                        )
+                    }
+                )
             }
 
-            if (list.isNotEmpty()) {
+            if (listResponse.isNotEmpty()) {
                 call.respond(
                     status = HttpStatusCode.OK,
-                    message = list
+                    message = listResponse
                 )
             }
         }
