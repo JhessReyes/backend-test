@@ -1,5 +1,6 @@
 package stsa.kotlin_htmx.api.v1.utils
 
+import stsa.kotlin_htmx.api.v1.responses.externalSource.AgentResponse
 import stsa.kotlin_htmx.api.v1.responses.externalSource.SkinResponse
 
 object XmlUtils {
@@ -46,6 +47,33 @@ object XmlUtils {
                     append("</skin>")
                 }
                 append("</skins>")
+            }
+        } else xml = ""
+
+        return xml
+    }
+
+    fun agentsToXml(agents: List<AgentResponse>): String {
+        val xml: String
+        if (agents.isNotEmpty()) {
+            xml = buildString {
+                append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+                append("<agents>")
+
+                agents.forEach { a ->
+                    append("<agent>")
+                    append("<id>${a.id}</id>")
+                    append("<name>${escapeHtmlTags(a.name)}</name>")
+                    append("<description>${escapeHtmlTags(a.description)}</description>")
+                    append("<image>${a.image}</image>")
+                    append("<team>")
+                    append("<id>${a.team.id}</id>")
+                    append("<name>${a.team.name}</name>")
+                    append("</team>")
+                    append("</agent>")
+                }
+
+                append("</agents>")
             }
         } else xml = ""
 
